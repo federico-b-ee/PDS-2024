@@ -29,7 +29,9 @@ jobs:
           echo "Directory $TAG does not exist."
           exit 1
         fi
-        cp -r pds_utils $RELEASE/
+        if [ -d pds_utils ]; then
+          cp -r pds_utils $RELEASE/
+        fi
         cp logo_UTN.svg $RELEASE/
         cp README.md $RELEASE/
         zip -r $RELEASE.zip $RELEASE/*
