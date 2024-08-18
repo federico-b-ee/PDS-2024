@@ -1,0 +1,46 @@
+name: Create .zip
+
+# It will create a .zip file with the contents of the TS* folder matching the tag
+# and upload it to the release section of the repository.
+on:
+  push:
+    tags:
+      - 'TS*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Create ZIP Archive
+      run: |
+        TAG=${GITHUB_REF##*/}
+        RELEASE=${TAG}_$(date +%Y%m%d)
+        echo "RELEASE=${TAG}_$(date +%Y%m%d)" >> $GITHUB_ENV
+        mkdir $RELEASE
+        
+        # Copy the folder that matches the tag number
+        if [ -d "$TAG" ]; then
+          cp -r "$TAG" $RELEASE/
+        else
+          echo "Directory $TAG does not exist."
+          exit 1
+        fi
+        cp -r pds_utils $RELEASE/
+        cp logo_UTN.svg $RELEASE/
+        cp README.md $RELEASE/
+        zip -r $RELEASE.zip $RELEASE/*
+        echo "Created ZIP file: $RELEASE.zip"
+
+    - name: Upload Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ${{ env.RELEASE }}.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+permissions:
+  contents: write
