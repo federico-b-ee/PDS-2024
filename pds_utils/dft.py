@@ -50,7 +50,7 @@ def plot_dft(dft: np.ndarray) -> None:
     Args:
         dft (np.ndarray): DFT coefficients
     """
-    axs = plt.subplots(2, 1, figsize=(15, 10))
+    fig, axs = plt.subplots(2, 1, figsize=(15, 10))
     axs[0].stem(np.abs(dft) / len(dft))
     axs[0].set_xlabel("Frequency")
     axs[0].set_ylabel("Magnitude")
