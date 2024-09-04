@@ -39,7 +39,6 @@ def plot_sine(
     sampling_freq: float,
     samples: int,
     amplitude: float,
-    dc_level: float,
     frequency: float,
     phase: float = 0.0,
 ) -> None:
@@ -49,7 +48,6 @@ def plot_sine(
         sampling_freq (float): Sampling frequency
         samples (int): Number of samples
         amplitude (float): Maximum amplitude of the sine wave
-        dc_level (float): DC level of the sine wave
         frequency (float): Frequency of the sine wave
         phase (float): Phase of the sine wave
     """
