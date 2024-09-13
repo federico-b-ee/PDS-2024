@@ -29,7 +29,7 @@ def single(
 
 
 def multiple(
-    signals: List[Tuple[np.array, np.array, float]],
+    signals: List[Tuple[np.array, np.array, float]], scatter: bool = False
 ) -> None:
     """Plots multiple wave signals on the same graph
 
@@ -39,12 +39,14 @@ def multiple(
             s (np.array): Array of samples
             time (np.array): Time array
             f (float): Frequency of the sine wave
+            scatter (bool): Scatter plot
     """
     num_frequencies = len(signals)
     _, axs = plt.subplots(num_frequencies, 1, figsize=(10, 2 * num_frequencies))
 
     for i, (t, s, f) in enumerate(signals):
-        axs[i].scatter(t, s, color="red", s=10, label="Samples")
+        if scatter:
+            axs[i].scatter(t, s, color="red", s=10, label="Samples")
         axs[i].plot(t, s)
         axs[i].set_title(f"Frequency {f} [Hz]")
         axs[i].set_xlabel("Time (s)")
