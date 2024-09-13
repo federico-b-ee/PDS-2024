@@ -21,8 +21,8 @@ def adc(
         np.ndarray: Signal with Quantization process.
         float: Quantization steps
     """
-    levels = 2**bits
-    q = (vcc - vee) / (levels - 1)
+    levels = 2**(bits-1)
+    q = (vcc) / (levels)
 
     s = np.clip(signal, vee, vcc)
     # Make it start from 0
